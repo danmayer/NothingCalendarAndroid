@@ -99,18 +99,7 @@ public class Users extends Activity {
 	          @SuppressWarnings("unchecked")
 			protected void parseJsonString(String json){
 	              try {
-	            	  
-//	            	  JSONArray array=new JSONArray(json);
-//					   for(int i=0;i<array.length();i++){
-//					    JSONObject jObject=array.getJSONObject(i);
-//					    Iterator iter = jObject.keys();
-//    	            	while(iter.hasNext()){
-//	            		  String key = (String)iter.next();
-//	            		  String value = jObject.getString(key);
-//	            		  userData.put(key,value);
-//    	            	}
-//					   }
-	            	  
+	                     	  
 	            	  ObjectMapper mapper = new ObjectMapper();
 	            	  //Object root = mapper.readValue(json, Object.class);
 	            	  //Map<String,String> rootAsMap = mapper.readValue(json, Map.class);

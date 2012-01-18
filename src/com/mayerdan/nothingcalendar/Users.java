@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonParseException;
@@ -26,6 +27,7 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class Users extends Activity {
@@ -124,17 +126,46 @@ public class Users extends Activity {
 	        	  Log.i(TAG, "post execute: "+result);
 	              if(result=="SUCCESS")
 	              {
-	                String text = "<div class='user_list'>"+
-	                		"<ul>"+
-	                		"{{#users}}"+
-	                		"<li><a href='/users/{{to_param}}' data-pjax='#main'>{{name}}</a></li>"+
-	                		"{{/users}}"+
-	                		"</ul>"+
-	                		"</div>";
-	      	        Template tmpl = Mustache.compiler().compile(text);
-   	        	    WebView webview = (WebView) findViewById(R.id.webview);
-	      	        webview.loadDataWithBaseURL(SERVER,tmpl.execute(userData),"text/html","UTF-8","about:blank");
-	      	        Log.i(TAG, "display complete");
+//	                String text = "<div class='user_list'>"+
+//	                		"<ul>"+
+//	                		"{{#users}}"+
+//	                		"<li><a href='/users/{{to_param}}' data-pjax='#main'>{{name}}</a></li>"+
+//	                		"{{/users}}"+
+//	                		"</ul>"+
+//	                		"</div>";
+//	      	        Template tmpl = Mustache.compiler().compile(text);
+//   	        	    WebView webview = (WebView) findViewById(R.id.webview);
+//	      	        webview.loadDataWithBaseURL(SERVER,tmpl.execute(userData),"text/html","UTF-8","about:blank");
+	      	        
+	            	// Set the View layer
+	          		setContentView(R.layout.users);
+	          		//setTitle("TestIconizedListView");
+
+	          		// Create Parser for raw/countries.xml
+//	          		CountryParser countryParser = new CountryParser();
+//	          		InputStream inputStream = getResources().openRawResource(
+//	          				R.raw.countries);
+	          		
+	          		// Parse the inputstream
+	          		//countryParser.parse(inputStream);
+
+	          		// Get Countries
+	          		//users = userData.get("users");
+	          		List<Object> users = (List<Object>) userData.get("users");
+	          		//List<Country> countryList = countryParser.getList();
+	          		
+	          		
+	          		// Create a customized ArrayAdapter
+	          		UserArrayAdapter adapter = new UserArrayAdapter(
+	          				getApplicationContext(), R.layout.user_listitem, users);
+	          		
+	          		// Get reference to ListView holder
+	          		ListView lv = (ListView) findViewById(R.id.usersLV);
+	          		
+	          		// Set the ListView adapter
+	          		lv.setAdapter(adapter);
+	          		
+	            	Log.i(TAG, "display complete");
 	      	        Toast.makeText(Users.this, "display complete", Toast.LENGTH_SHORT).show();
 	              }
 	              else {

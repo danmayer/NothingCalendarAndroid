@@ -36,8 +36,9 @@ public class Users extends Activity {
 		//private static final String HOST   = "nothingcalendar.com";
 		
 		//development settings
-		private static final String HOST   = "legal-hate.showoff.io";
-		
+		//private static final String HOST   = "legal-hate.showoff.io";
+	    private static final String HOST   = "localhost:3000";	
+	
 		private static final String SERVER = "http://"+HOST;
 		private static final String TAG = "Main";
 		
@@ -88,7 +89,7 @@ public class Users extends Activity {
 	          Hashtable<String,String> ht=new Hashtable<String,String>();
 	 
 	          Log.i(TAG, "about to get");
-	           String json = HelperHttp.getJSONResponseFromURL(SERVER+"/users.json", ht);
+	           String json = HelperHttpClient.getJSONResponseFromURL(SERVER+"/users.json", ht);
 	           Log.i(TAG, "json string: "+json);
 	           if(json!=null) {
 	             parseJsonString(json.toString());

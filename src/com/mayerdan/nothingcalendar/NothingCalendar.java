@@ -20,7 +20,8 @@ public class NothingCalendar extends Activity {
 	//private static final String HOST   = "nothingcalendar.com";
 	
 	//development settings
-	private static final String HOST   = "legal-hate.showoff.io";
+	//private static final String HOST   = "legal-hate.showoff.io";
+	private static final String HOST   = "localhost:3000";
 	
 	private static final String SERVER = "http://"+HOST;
 	private static final String TAG = "Main";

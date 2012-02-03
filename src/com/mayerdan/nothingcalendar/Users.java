@@ -32,14 +32,7 @@ import android.widget.Toast;
 
 public class Users extends Activity {
 	
-		//production settings
-		//private static final String HOST   = "nothingcalendar.com";
-		
-		//development settings
-		//private static final String HOST   = "legal-hate.showoff.io";
-	    private static final String HOST   = "localhost:3000";	
-	
-		private static final String SERVER = "http://"+HOST;
+		private static final String SERVER = "http://"+NothingCalendar.HOST;
 		private static final String TAG = "Main";
 		
 		Map<String, String> extraHeaders = new HashMap<String, String>();
@@ -180,7 +173,7 @@ public class Users extends Activity {
 	    public class MyWebViewClient extends WebViewClient {
 	        @Override
 	        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-	            if (Uri.parse(url).getHost().equals(HOST)) {
+	            if (Uri.parse(url).getHost().equals(NothingCalendar.HOST)) {
 	                // This is my web site, so do not override; let my WebView load the page
 	            	view.loadUrl(url, extraHeaders);
 	                return true;

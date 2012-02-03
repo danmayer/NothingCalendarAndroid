@@ -17,13 +17,13 @@ import android.widget.Toast;
 public class NothingCalendar extends Activity {
 
 	//production settings
-	//private static final String HOST   = "nothingcalendar.com";
+	//public static final String HOST   = "nothingcalendar.com";
 	
 	//development settings
-	//private static final String HOST   = "legal-hate.showoff.io";
-	private static final String HOST   = "localhost:3000";
+	//public static final String HOST   = "legal-hate.showoff.io";
+	public static final String HOST   = "localhost:3000";
 	
-	private static final String SERVER = "http://"+HOST;
+	public static final String SERVER = "http://"+HOST;
 	private static final String TAG = "Main";
 	
 	Map<String, String> extraHeaders = new HashMap<String, String>();

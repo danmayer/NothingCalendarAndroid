@@ -3,7 +3,6 @@ package com.mayerdan.nothingcalendar;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonParseException;
@@ -16,10 +15,12 @@ import android.util.Log;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-public class Users extends Activity {
+/*
+ * Displays about page as mustache in webview
+ */
+public class About extends Activity {
 
 	private static final String SERVER = "http://"+NothingCalendar.HOST;
 	private static final String TAG = "Main";
@@ -35,24 +36,30 @@ public class Users extends Activity {
 		extraHeaders.put("app-request", "true");
 
 		setContentView(R.layout.main);
+	
 		WebView webview = (WebView) findViewById(R.id.webview);
-		webview.setWebViewClient(new NCViewClient(this));
+		NCViewClient mainwvClient = new NCViewClient(this);
+		webview.setWebViewClient(mainwvClient);
 		webview.addJavascriptInterface(new NCJavaScriptInterface(this), "Android");
 		WebSettings webSettings = webview.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 
-		executeAsyncTask();
+		//render html from server
+		webview.loadUrl(SERVER+"/site/about", mainwvClient.getExtraHeaders());
+		
+		//mustache that to webview
+		//executeAsyncTask();
 
 	}
 
 	private void executeAsyncTask(){
 		Log.i(TAG, "starting async");
-		GetUsersAyncTask async=new GetUsersAyncTask();
+		GetAboutAyncTask async=new GetAboutAyncTask();
 		Hashtable<String,String> ht=new Hashtable<String,String>();
 		async.execute(ht);
 	}
 
-	private class GetUsersAyncTask extends AsyncTask<Map<String, String>,Void,String>{
+	private class GetAboutAyncTask extends AsyncTask<Map<String, String>,Void,String>{
 
 		@Override
 		protected String doInBackground(Map<String, String>... params) {
@@ -60,7 +67,7 @@ public class Users extends Activity {
 			Hashtable<String,String> ht=new Hashtable<String,String>();
 
 			Log.i(TAG, "about to get");
-			String json = HelperHttpClient.getJSONResponseFromURL(SERVER+"/users.json", ht);
+			String json = HelperHttpClient.getJSONResponseFromURL(SERVER+"/site/about", ht);
 			Log.i(TAG, "json string: "+json);
 			if(json!=null) {
 				parseJsonString(json.toString());
@@ -111,37 +118,12 @@ public class Users extends Activity {
 
 				// Set the View layer
 				setContentView(R.layout.users);
-				//setTitle("TestIconizedListView");
-
-				// Create Parser for raw/countries.xml
-				//	          		CountryParser countryParser = new CountryParser();
-				//	          		InputStream inputStream = getResources().openRawResource(
-				//	          				R.raw.countries);
-
-				// Parse the inputstream
-				//countryParser.parse(inputStream);
-
-				// Get Countries
-				//users = userData.get("users");
-				List<Object> users = (List<Object>) userData.get("users");
-				//List<Country> countryList = countryParser.getList();
-
-
-				// Create a customized ArrayAdapter
-				UserArrayAdapter adapter = new UserArrayAdapter(
-						getApplicationContext(), R.layout.user_listitem, users);
-
-				// Get reference to ListView holder
-				ListView lv = (ListView) findViewById(R.id.usersLV);
-
-				// Set the ListView adapter
-				lv.setAdapter(adapter);
 
 				Log.i(TAG, "display complete");
-				Toast.makeText(Users.this, "display complete", Toast.LENGTH_SHORT).show();
+				Toast.makeText(About.this, "display complete", Toast.LENGTH_SHORT).show();
 			}
 			else {
-				Toast.makeText(Users.this, "error on json parse", Toast.LENGTH_SHORT).show();
+				Toast.makeText(About.this, "error on json parse", Toast.LENGTH_SHORT).show();
 			}
 		}
 

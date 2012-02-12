@@ -26,4 +26,9 @@ public class NCJavaScriptInterface {
 		Intent myIntent = new Intent(mContext, Users.class);
 		mContext.startActivity(myIntent);
 	}
+	
+	public void showAbout() {
+		Intent myIntent = new Intent(mContext, About.class);
+		mContext.startActivity(myIntent);
+	}
 }

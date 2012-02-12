@@ -79,7 +79,7 @@ public class UserArrayAdapter extends ArrayAdapter<Object> {
 		
 		// Set user Id
 		//userId.setText(user.id);
-		userId.setText((String)user.get("id"));
+		userId.setText(((Integer)user.get("id")).toString());
 		return row;
 	}
 	

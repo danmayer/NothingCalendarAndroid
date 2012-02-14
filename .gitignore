@@ -1,3 +1,4 @@
 bin/classes/**
 bin/**
+bin/classes/**/*.class
 bin/HelloAndriod.apk

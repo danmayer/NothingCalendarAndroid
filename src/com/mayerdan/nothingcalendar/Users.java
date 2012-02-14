@@ -10,16 +10,18 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class Users extends Activity {
+public class Users extends ListActivity {
 
 	private static final String SERVER = "http://"+NothingCalendar.HOST;
 	private static final String TAG = "Main";
@@ -27,23 +29,33 @@ public class Users extends Activity {
 	Map<String, String> extraHeaders = new HashMap<String, String>();
 	//Map<String, String> userData = new HashMap<String, String>();
 	Map<String,Object> userData = new HashMap<String, Object>();
+	
+	// Create a customized ArrayAdapter
+	UserArrayAdapter adapter = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		extraHeaders.put("app-request", "true");
-
-		setContentView(R.layout.main);
-		WebView webview = (WebView) findViewById(R.id.webview);
-		webview.setWebViewClient(new NCViewClient(this));
-		webview.addJavascriptInterface(new NCJavaScriptInterface(this), "Android");
-		WebSettings webSettings = webview.getSettings();
-		webSettings.setJavaScriptEnabled(true);
-
 		executeAsyncTask();
-
+		//setListAdapter(adapter);
 	}
+	
+	@Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        // Get the item that was clicked
+        Object o = getListAdapter().getItem(position);
+        String keyword = o.toString();
+        Toast.makeText(this, "You selected: " + keyword, Toast.LENGTH_LONG)
+                .show();
+
+
+        {
+
+        } 
+    }
 
 	private void executeAsyncTask(){
 		Log.i(TAG, "starting async");
@@ -110,7 +122,7 @@ public class Users extends Activity {
 				//	      	        webview.loadDataWithBaseURL(SERVER,tmpl.execute(userData),"text/html","UTF-8","about:blank");
 
 				// Set the View layer
-				setContentView(R.layout.users);
+				//setContentView(R.layout.users);
 				//setTitle("TestIconizedListView");
 
 				// Create Parser for raw/countries.xml
@@ -128,14 +140,15 @@ public class Users extends Activity {
 
 
 				// Create a customized ArrayAdapter
-				UserArrayAdapter adapter = new UserArrayAdapter(
+				adapter = new UserArrayAdapter(
 						getApplicationContext(), R.layout.user_listitem, users);
+				
+				setListAdapter(adapter);
 
 				// Get reference to ListView holder
-				ListView lv = (ListView) findViewById(R.id.usersLV);
-
+				//ListView lv = getListView();
 				// Set the ListView adapter
-				lv.setAdapter(adapter);
+				//lv.setAdapter(adapter);
 
 				Log.i(TAG, "display complete");
 				Toast.makeText(Users.this, "display complete", Toast.LENGTH_SHORT).show();

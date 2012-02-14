@@ -117,7 +117,7 @@ public class About extends Activity {
 				//	      	        webview.loadDataWithBaseURL(SERVER,tmpl.execute(userData),"text/html","UTF-8","about:blank");
 
 				// Set the View layer
-				setContentView(R.layout.users);
+				setContentView(R.layout.main);
 
 				Log.i(TAG, "display complete");
 				Toast.makeText(About.this, "display complete", Toast.LENGTH_SHORT).show();

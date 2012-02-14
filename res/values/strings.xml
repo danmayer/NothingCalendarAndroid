@@ -2,4 +2,6 @@
 <resources>
     <string name="hello">I am Batman still</string>
     <string name="app_name">NothingCalendar</string>
+    <string name="user_name">User Name</string>
+    <string name="user_id">User Id</string>
 </resources>
